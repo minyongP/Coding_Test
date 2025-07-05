@@ -5,7 +5,7 @@ import java.util.Scanner;
 5로 나눈 나머지를 들을 배열에 저장
 가장 작은 3의 배수를 선택 없다면 -1
  */
-public class 설탕_배달 {
+public class P2839 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
