@@ -1,4 +1,4 @@
-package datastructure.hashset;
+package datastructure.set;
 
 import java.util.*;
 

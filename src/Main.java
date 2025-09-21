@@ -1,9 +1,20 @@
-import java.util.Arrays;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(-5.0/0);  // -Infinity
-        System.out.println(Math.round(-5.0/0)); // -9223372036854775808
-        System.out.println((int) Math.round(-5.0/0)); // 0
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+        int M = sc.nextInt();
+
+        Set<String> set = new HashSet<>();
+        for (int i = 0; i < N; i++) set.add(sc.next());
+
+        Set<String> ans = new TreeSet<>();
+        for (int i = 0; i < M; i++) {
+            String s = sc.next();
+            if (set.contains(s)) ans.add(s);
+        }
+        System.out.println(ans.size());
+        for (String s : ans) System.out.println(s);
     }
 }
