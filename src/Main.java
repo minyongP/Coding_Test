@@ -1,20 +1,29 @@
+import java.io.IOException;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int M = sc.nextInt();
+        int n = Integer.parseInt(sc.nextLine()); // 학생 수
+        String[] students = sc.nextLine().split(" "); // 학생 이름 배열
+        Map<String, Integer> popularity = new HashMap<>();
+        for (String s : students) popularity.put(s, 0);
 
-        Set<String> set = new HashSet<>();
-        for (int i = 0; i < N; i++) set.add(sc.next());
-
-        Set<String> ans = new TreeSet<>();
-        for (int i = 0; i < M; i++) {
-            String s = sc.next();
-            if (set.contains(s)) ans.add(s);
+        for (int i = 0; i < n; i++) {
+            String line = sc.nextLine();
+            String[] likes = line.split(" ");
+            for (String likedStudent : likes) {
+                popularity.put(likedStudent, popularity.get(likedStudent) + 1);
+            }
         }
-        System.out.println(ans.size());
-        for (String s : ans) System.out.println(s);
+
+        List<String> studentList = new ArrayList<>(Arrays.asList(students));
+        studentList.sort((a, b) -> {
+            int diff = popularity.get(b) - popularity.get(a);
+            if (diff != 0) return diff;
+            return a.compareTo(b);
+        });
+
+        for (String s : studentList) System.out.println(s + " " + popularity.get(s));
     }
 }
