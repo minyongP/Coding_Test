@@ -31,3 +31,4 @@ bin/
 *.meta
 *.xml
 /.idea
+/.idea/

@@ -5,24 +5,28 @@ import java.util.Scanner;
 public class P1859 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
 
-		int N = sc.nextInt();
-		int[] A = new int[N];
-		long ans = 0;
+		for(int test_case = 1; test_case <= T; test_case++) {
+			System.out.print("#" + test_case + " ");
+			int N = sc.nextInt();
+			int[] A = new int[N];
 
-		for (int i = 0; i < N; i++) {
-			A[i] = sc.nextInt();
+			for (int i = 0; i < N; i++) {
+				A[i] = sc.nextInt();
+			}
+
+			long ans = 0;
+			int max = 0;
+			// 뒤에서 부터
+			for (int i = N - 1; i >= 0; i--) {
+				if (A[i] > max) {
+					max = A[i];
+				}
+				else ans += max - A[i];
+			}
+
+			System.out.println(ans);
 		}
-
-		// // 2일 뒤까지 예상하여 차이가 더 큰것을 값에 더한다
-		// for (int i = 0; i < N-2; i++) {
-		// 	ans += Math.max(Math.max(A[i+2] - A[i], A[i+1] - A[i]), 0);
-		// }
-		// // 마지막 하루 [메모리 아웃]
-		// ans += Math.max(A[N-1]- A[N-2], 0);
-
-		// 뒤에서 부터
-
-		System.out.println(ans);
 	}
 }
