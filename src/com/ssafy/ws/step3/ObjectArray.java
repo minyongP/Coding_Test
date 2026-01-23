@@ -1,4 +1,4 @@
-package com.ssafy.sw.step3;
+package com.ssafy.ws.step3;
 
 /**
  * 객체 배열 연습하기

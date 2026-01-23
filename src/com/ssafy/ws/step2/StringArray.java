@@ -1,4 +1,4 @@
-package com.ssafy.sw.step2;
+package com.ssafy.ws.step2;
 
 /**
  * 문자열 배열 연습하기

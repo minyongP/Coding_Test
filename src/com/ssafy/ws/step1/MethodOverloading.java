@@ -1,4 +1,4 @@
-package com.ssafy.sw.step1;
+package com.ssafy.ws.step1;
 
 /**
  * 메소드 오버로딩 연습하기
