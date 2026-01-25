@@ -7,24 +7,20 @@ public class P2991 {
 		int B = sc.nextInt();
 		int C = sc.nextInt();
 		int D = sc.nextInt();
+		int[] P = new int[3];
+		for (int i = 0; i < 3; i++) {
+			P[i] = sc.nextInt();
+		}
 
-		int P = sc.nextInt();
-		int M = sc.nextInt();
-		int N = sc.nextInt();
+		for (int i = 0; i < 3; i++) {
+			int ans = 0;
+			int t = P[i] % (A + B);
+			if (0 < t && t <= A) ans++;
 
-		int ans = 0;
-		if (P % (A + B + 1) <= A) ans++;
-		if (P % (C + D + 1) <= C) ans++;
-		System.out.println(ans);
+			t = P[i] % (C + D);
+			if (0 < t && t <= C) ans++;
 
-		ans = 0;
-		if (M % (A + B + 1) <= A) ans++;
-		if (M % (C + D + 1) <= C) ans++;
-		System.out.println(ans);
-
-		ans = 0;
-		if (N % (A + B + 1) <= A) ans++;
-		if (N % (C + D + 1) <= C) ans++;
-		System.out.println(ans);
+			System.out.println(ans);
+		}
 	}
 }
