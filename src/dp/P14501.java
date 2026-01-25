@@ -19,8 +19,12 @@ public class P14501 {
 		for (int i = N-1; i >= 0; i--) {
 			int day = A[i][0];
 			if (day <= N - i) {
-				// dp[i] = Math.max(dp[i-day][1])
+				dp[i] = Math.max(dp[i+1], dp[i + day] + A[i][1]);
+			}
+			else {
+				dp[i] = dp[i+1];
 			}
 		}
+		System.out.println(dp[0]);
 	}
 }
