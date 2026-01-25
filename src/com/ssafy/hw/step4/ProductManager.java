@@ -110,4 +110,56 @@ public class ProductManager {
 		}
 		return reviewList;
 	}
+
+	public Product[] searchByName(String name) {
+		int cnt = 0;
+		for (int i = 0; i < pCount; i++) {
+			if (products[i].getpName().contains(name)) cnt++;
+		}
+
+		Product[] productList = new Product[cnt];
+		cnt = 0;
+		for (int i = 0; i < pCount; i++) {
+			if (products[i].getpName().contains(name))  productList[cnt++] = products[i];
+		}
+		return productList;
+	}
+
+	public long getTotalPrice() {
+		long total = 0;
+		for (int i = 0; i < pCount; i++) {
+			total += (long) products[i].getPrice() * products[i].getQuantity();
+		}
+		return total;
+	}
+
+	public Product[] getProducts() {
+		return Arrays.stream(products, 0, pCount).filter(p -> !(p instanceof Refrigerator)).toArray(Product[]::new);
+	}
+
+	public Refrigerator[] getRefrigerators() {
+		int cnt = 0;
+		for (int i = 0; i < pCount; i++) {
+			if (products[i] instanceof Refrigerator) cnt++;
+		}
+		Refrigerator[] refrigerators = new Refrigerator[cnt];
+		cnt = 0;
+		for (int i = 0; i < pCount; i++) {
+			if (products[i] instanceof Refrigerator) refrigerators[cnt++] = (Refrigerator)products[i];
+		}
+		return refrigerators;
+	}
+
+	public Refrigerator[] getRefrigeratorsFreezer(boolean freeze) {
+		int cnt = 0;
+		for (int i = 0; i < pCount; i++) {
+			if (products[i] instanceof Refrigerator) cnt++;
+		}
+		Refrigerator[] refrigerators = new Refrigerator[cnt];
+		cnt = 0;
+		for (int i = 0; i < pCount; i++) {
+			if (products[i] instanceof Refrigerator) refrigerators[cnt++] = (Refrigerator)products[i];
+		}
+		return Arrays.stream(refrigerators).filter(r -> r.isFreezer() == freeze).toArray(Refrigerator[]::new);
+	}
 }

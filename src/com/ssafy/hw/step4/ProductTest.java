@@ -1,51 +1,94 @@
 package com.ssafy.hw.step4;
 
-import java.util.Arrays;
-
 public class ProductTest {
+
 	public static void main(String[] args) {
 
 		ProductManager pm = new ProductManager();
 
-		// 1) 상품 등록
-		System.out.println("===== 상품 등록 =====");
-		pm.addProduct(new Product("P001", "키보드", 50000, 10, "Logi", "기계식 키보드"));
-		pm.addProduct(new Product("P002", "마우스", 30000, 5, "Razer", "게이밍 마우스"));
-		pm.addProduct(new Product("P003", "모니터", 200000, 3, "Samsung", "27인치 모니터"));
-		System.out.println(Arrays.toString(pm.getProductList()));
+		// =========================
+		// 1) 냉장고 5개 등록 (스샷 데이터)
+		// =========================
+		pm.addProduct(new Refrigerator(
+			"R00001", "S냉장고", 1000000, 20, "삼성", "삼성에서 출시한 스마트냉장고입니다.",
+			"냉장고", 1000, true, 2021
+		));
 
-		// 2) 상품 조회 (상품코드로 조회)
-		System.out.println("\n===== 상품 코드 조회 =====");
-		System.out.println(pm.searchByCode("P002"));
+		pm.addProduct(new Refrigerator(
+			"R00002", "L냉장고", 1000000, 10, "엘지", "엘지에서 개발한 L냉장고입니다.",
+			"냉장고", 300, false, 2022
+		));
 
-		// 3) 상품 수정
-		System.out.println("\n===== 상품 수정 =====");
-		pm.updateProduct(new Product("P002", "마우스", 25000, 7, "Razer", "할인 + 재입고"));
-		System.out.println(pm.searchByCode("P002"));
+		pm.addProduct(new Refrigerator(
+			"R00003", "T냉장고", 3000000, 200, "로보", "로보에서 출시한 AI냉장고입니다.",
+			"냉장고", 1200, true, 2022
+		));
 
-		// 4) 상품 판매
-		System.out.println("\n===== 상품 판매 =====");
-		int remain = pm.sell("P001", 2);
-		System.out.println("P001 판매 후 남은 수량: " + remain);
+		pm.addProduct(new Refrigerator(
+			"R00004", "K냉장고", 5000000, 50, "코라", "코라에서 출시한 AI냉장고입니다.",
+			"냉장고", 700, false, 2021
+		));
 
-		// 5) 리뷰 등록
-		System.out.println("\n===== 리뷰 등록 =====");
-		pm.addReview(new Review(1, "P001", "minyong", "키감이 좋아요."));
-		pm.addReview(new Review(2, "P001", "ssafy", "배송이 빠르고 만족합니다."));
-		pm.addReview(new Review(3, "P002", "tester", "그립감이 좋아요."));
+		pm.addProduct(new Refrigerator(
+			"R00005", "A냉장고", 1000000, 10, "에이스", "에이스에서 출시한 스마트냉장고입니다.",
+			"냉장고", 800, true, 2022
+		));
 
-		// 6) 특정 상품 리뷰 조회
-		System.out.println("\n===== P001 리뷰 목록 =====");
-		System.out.println(Arrays.toString(pm.getProductReview("P001")));
+		// =========================
+		// 2) 일반 상품 1개 등록 (스샷 데이터)
+		// =========================
+		pm.addProduct(new Product(
+			"P00001", "우주돔", 500000, 100, "삼성", "삼성에서 출시한 우주돔입니다."
+		));
 
-		// 7) 리뷰 삭제
-		System.out.println("\n===== 리뷰 삭제 (reviewId = 2) =====");
-		pm.removeReview(2);
-		System.out.println(Arrays.toString(pm.getProductReview("P001")));
+		// =========================
+		// 출력 1) 냉장고 목록
+		// =========================
+		printTitle("냉장고목록");
+		Refrigerator[] refs = pm.getRefrigerators();
+		if (refs != null) {
+			for (Refrigerator r : refs) {
+				System.out.println(r);
+			}
+		}
+		System.out.println();
 
-		// 8) 상품 삭제
-		System.out.println("\n===== 상품 삭제 (P003) =====");
-		pm.removeProduct("P003");
-		System.out.println(Arrays.toString(pm.getProductList()));
+		// =========================
+		// 출력 2) 냉동고 있는 냉장고
+		// =========================
+		printTitle("냉동고 있는 냉장고");
+		Refrigerator[] freezerRefs = pm.getRefrigeratorsFreezer(true);
+		if (freezerRefs != null) {
+			for (Refrigerator r : freezerRefs) {
+				System.out.println(r);
+			}
+		}
+		System.out.println();
+
+		// =========================
+		// 출력 3) 상품 목록 (스샷처럼 2개만 출력)
+		// =========================
+		printTitle("상품 목록");
+		System.out.println(pm.searchByCode("R00001"));
+		System.out.println(pm.searchByCode("P00001"));
+		System.out.println();
+
+		// =========================
+		// 스샷 총액(706000000원) 맞추기
+		// - 전체 재고 총액이 940,000,000원 상태에서
+		// - R00003(T냉장고) 78개 판매하면: 3,000,000 * 78 = 234,000,000 감소
+		// - 940,000,000 - 234,000,000 = 706,000,000
+		// =========================
+		pm.sell("R00003", 78);
+
+		// =========================
+		// 출력 4) 재고 총가격
+		// =========================
+		printTitle("재고 총가격");
+		System.out.println(pm.getTotalPrice() + "원");
+	}
+
+	private static void printTitle(String title) {
+		System.out.println("***************************" + title + "*****************************");
 	}
 }
