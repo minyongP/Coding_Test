@@ -2,13 +2,25 @@ package com.ssafy.hw.step2;
 
 import java.util.Arrays;
 
-public class UserManager {
+// IUserManager 의 실제 구현, IUserManager 에 정의된 메소드들을 모두 구현 해야한다.
+public class UserManagerImpl implements IUserManager {
+
+	private User[] userList = new User[100];
 
 	private final int MAX_SIZE = 100;
 
 	private int size = 0;
-	
-	private User[] userList = new User[MAX_SIZE];
+
+	// 싱글톤 패턴을 위한 객체 생성, 알맞은 접근 제어자 설정
+	private static final UserManagerImpl um = new UserManagerImpl();
+
+	// 싱글톤 패턴의 기본 생성자, 객체 생성을 외부에서 하지 못하게 막음
+	private UserManagerImpl() {};
+
+	// 외부에서 사용할 수 있도록 UserManagerImpl 인스턴스 반환
+	public static UserManagerImpl getInstance() {
+		return um;
+	}
 
 	public void add(User user) {
 		if (size < MAX_SIZE) {
@@ -22,70 +34,62 @@ public class UserManager {
 
 		return Arrays.copyOfRange(userList, 0, size);
 	}
-	
-	// 일반 사용자만 반환
+
 	public User[] getUsers() {
-		
+
 		int cnt = 0;
-		
-		for(int i=0; i<this.size; i++) {
-			// 리스트안의 객체가 VipUser 클래스의 인스턴스인지 검사
-			if(!(userList[i] instanceof VipUser)) {
+
+		for (int i = 0; i < this.size; i++) {
+			if (!(userList[i] instanceof VipUser)) {
 				cnt++;
 			}
 		}
-		
+
 		if (cnt == 0)
 			return null;
-		
+
 		User[] res = new User[cnt];
-		
-		for(int i=0, index = 0; i<this.size; i++) {
-			// 리스트안의 객체가 VipUser 클래스의 인스턴스인지 검사
-			if(!(userList[i] instanceof VipUser)) {
+
+		for (int i = 0, index = 0; i < this.size; i++) {
+			if (!(userList[i] instanceof VipUser)) {
 				res[index++] = userList[i];
 			}
 		}
-		
-		return res;
-		
-	}
-	
-	// VipUser만 반환
-	public VipUser[] getVipUsers() {
-		
-		int cnt = 0;
-		
-		for(int i=0; i<this.size; i++) {
-			// 리스트안의 객체가 VipUser 클래스의 인스턴스인지 검사
-			if(userList[i] instanceof VipUser) {
 
+		return res;
+
+	}
+
+	public VipUser[] getVipUsers() {
+
+		int cnt = 0;
+
+		for (int i = 0; i < this.size; i++) {
+			if (userList[i] instanceof VipUser) {
 				cnt++;
 			}
 		}
-		
+
 		if (cnt == 0)
 			return null;
-		
+
 		VipUser[] res = new VipUser[cnt];
-		
-		for(int i=0, index = 0; i<this.size; i++) {
-			// 리스트안의 객체가 VipUser 클래스의 인스턴스인지 검사
-			if(userList[i] instanceof VipUser) {
-				res[index++] = (VipUser)userList[i];
+
+		for (int i = 0, index = 0; i < this.size; i++) {
+			if (userList[i] instanceof VipUser) {
+				res[index++] = (VipUser) userList[i];
 			}
 		}
-		
+
 		return res;
-		
+
 	}
-	
+
 	public User[] searchByName(String name) {
 
 		int cnt = 0;
 
 		for (int i = 0; i < this.size; i++) {
-			// 주어진 이름을 포함하는 사용자인지 검사
 			if (userList[i].getName().contains(name)) {
 				cnt++;
 			}
@@ -97,7 +101,6 @@ public class UserManager {
 		User[] res = new User[cnt];
 
 		for (int i = 0, index = 0; i < this.size; i++) {
-			// 주어진 이름을 포함하는 사용자인지 검사
 			if (userList[i].getName().contains(name)) {
 				res[index++] = userList[i];
 			}
@@ -105,18 +108,17 @@ public class UserManager {
 
 		return res;
 	}
-	
-	// 사용자의 평균 나이 반환
+
 	public double getAgeAvg() {
-		
+
 		int sum = 0;
-		
-		for(int i=0; i<this.size; i++) {
+
+		for (int i = 0; i < this.size; i++) {
 			sum += userList[i].getAge();
 		}
-		
-		return (double)sum /this.size;
-		
+
+		return sum / this.size;
+
 	}
 
 }

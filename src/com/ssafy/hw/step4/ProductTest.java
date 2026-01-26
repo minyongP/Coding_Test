@@ -4,11 +4,8 @@ public class ProductTest {
 
 	public static void main(String[] args) {
 
-		ProductManager pm = new ProductManager();
+		ProductManagerImpl pm = ProductManagerImpl.getInstance();
 
-		// =========================
-		// 1) 냉장고 5개 등록 (스샷 데이터)
-		// =========================
 		pm.addProduct(new Refrigerator(
 			"R00001", "S냉장고", 1000000, 20, "삼성", "삼성에서 출시한 스마트냉장고입니다.",
 			"냉장고", 1000, true, 2021
@@ -34,16 +31,10 @@ public class ProductTest {
 			"냉장고", 800, true, 2022
 		));
 
-		// =========================
-		// 2) 일반 상품 1개 등록 (스샷 데이터)
-		// =========================
 		pm.addProduct(new Product(
 			"P00001", "우주돔", 500000, 100, "삼성", "삼성에서 출시한 우주돔입니다."
 		));
 
-		// =========================
-		// 출력 1) 냉장고 목록
-		// =========================
 		printTitle("냉장고목록");
 		Refrigerator[] refs = pm.getRefrigerators();
 		if (refs != null) {
@@ -53,9 +44,6 @@ public class ProductTest {
 		}
 		System.out.println();
 
-		// =========================
-		// 출력 2) 냉동고 있는 냉장고
-		// =========================
 		printTitle("냉동고 있는 냉장고");
 		Refrigerator[] freezerRefs = pm.getRefrigeratorsFreezer(true);
 		if (freezerRefs != null) {
@@ -65,25 +53,13 @@ public class ProductTest {
 		}
 		System.out.println();
 
-		// =========================
-		// 출력 3) 상품 목록 (스샷처럼 2개만 출력)
-		// =========================
 		printTitle("상품 목록");
 		System.out.println(pm.searchByCode("R00001"));
 		System.out.println(pm.searchByCode("P00001"));
 		System.out.println();
 
-		// =========================
-		// 스샷 총액(706000000원) 맞추기
-		// - 전체 재고 총액이 940,000,000원 상태에서
-		// - R00003(T냉장고) 78개 판매하면: 3,000,000 * 78 = 234,000,000 감소
-		// - 940,000,000 - 234,000,000 = 706,000,000
-		// =========================
 		pm.sell("R00003", 78);
 
-		// =========================
-		// 출력 4) 재고 총가격
-		// =========================
 		printTitle("재고 총가격");
 		System.out.println(pm.getTotalPrice() + "원");
 	}
