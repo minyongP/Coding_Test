@@ -1,18 +1,17 @@
 package com.ssafy.hw.step2;
 
-// 인터페이스 정의
 public interface IUserManager {
 
-void add(User user);
+	void add(User user);
 
-User[] getList();
+	User[] getList();
 
-User[] getUsers();
+	User[] getUsers();
 
-VipUser[] getVipUsers();
+	VipUser[] getVipUsers();
 
-User[] searchByName(String name);
+	User[] searchByName(String name);
 
-double getAgeAvg();
+	double getAgeAvg();
 
 }

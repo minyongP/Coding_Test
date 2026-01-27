@@ -1,123 +1,106 @@
 package com.ssafy.hw.step2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-// IUserManager 의 실제 구현, IUserManager 에 정의된 메소드들을 모두 구현 해야한다.
 public class UserManagerImpl implements IUserManager {
 
-	private User[] userList = new User[100];
+	// ArrayList 를 사용하여 사용자 리스트 관리하기
+	private List<User> userList = new ArrayList<>();
 
 	private final int MAX_SIZE = 100;
 
-	private int size = 0;
+	private static UserManagerImpl um = new UserManagerImpl();
 
-	// 싱글톤 패턴을 위한 객체 생성, 알맞은 접근 제어자 설정
-	private static final UserManagerImpl um = new UserManagerImpl();
+	private UserManagerImpl() {
+	};
 
-	// 싱글톤 패턴의 기본 생성자, 객체 생성을 외부에서 하지 못하게 막음
-	private UserManagerImpl() {};
-
-	// 외부에서 사용할 수 있도록 UserManagerImpl 인스턴스 반환
 	public static UserManagerImpl getInstance() {
 		return um;
 	}
 
+	// ArrayList의 사용 방법에 맞게 구현
 	public void add(User user) {
-		if (size < MAX_SIZE) {
-			userList[size++] = user;
+		if (userList.size() < MAX_SIZE) {
+			userList.add(user);
 		} else {
 			System.out.println("유저의 수가 100을 넘었습니다. 등록 불가.");
 		}
 	}
 
+	// ArrayList를 배열로 변환하여 반환
 	public User[] getList() {
 
-		return Arrays.copyOfRange(userList, 0, size);
+		User[] res = new User[userList.size()];
+
+		return this.userList.toArray(res);
 	}
 
+	// ArrayList의 사용 방법에 맞게 구현
 	public User[] getUsers() {
 
-		int cnt = 0;
+		List<User> list = new ArrayList<>();
 
-		for (int i = 0; i < this.size; i++) {
-			if (!(userList[i] instanceof VipUser)) {
-				cnt++;
+		for (int i = 0; i < userList.size(); i++) {
+			if (!(userList.get(i) instanceof VipUser)) {
+				list.add(userList.get(i));
 			}
 		}
 
-		if (cnt == 0)
-			return null;
+		User[] res = new User[list.size()];
 
-		User[] res = new User[cnt];
-
-		for (int i = 0, index = 0; i < this.size; i++) {
-			if (!(userList[i] instanceof VipUser)) {
-				res[index++] = userList[i];
-			}
-		}
-
-		return res;
+		return list.toArray(res);
 
 	}
 
+	// ArrayList의 사용 방법에 맞게 구현
 	public VipUser[] getVipUsers() {
 
-		int cnt = 0;
+		List<VipUser> list = new ArrayList<>();
 
-		for (int i = 0; i < this.size; i++) {
-			if (userList[i] instanceof VipUser) {
-				cnt++;
+		for (int i = 0; i < userList.size(); i++) {
+			if (!(userList.get(i) instanceof VipUser)) {
+				list.add((VipUser) userList.get(i));
 			}
 		}
 
-		if (cnt == 0)
-			return null;
+		VipUser[] res = new VipUser[list.size()];
 
-		VipUser[] res = new VipUser[cnt];
-
-		for (int i = 0, index = 0; i < this.size; i++) {
-			if (userList[i] instanceof VipUser) {
-				res[index++] = (VipUser) userList[i];
-			}
-		}
-
-		return res;
+		return list.toArray(res);
 
 	}
 
+	// ArrayList의 사용 방법에 맞게 구현
 	public User[] searchByName(String name) {
 
-		int cnt = 0;
+		List<User> list = new ArrayList<>();
 
-		for (int i = 0; i < this.size; i++) {
-			if (userList[i].getName().contains(name)) {
-				cnt++;
+		for (int i = 0; i < userList.size(); i++) {
+			if (userList.get(i).getName().contains(name)) {
+				list.add(userList.get(i));
 			}
 		}
 
-		if (cnt == 0)
+		// 주어진 단어를 포함하는 사용자가 없으면 null을 반환한다.
+		if(list.size() == 0)
 			return null;
 
-		User[] res = new User[cnt];
+		User[] res = new User[list.size()];
 
-		for (int i = 0, index = 0; i < this.size; i++) {
-			if (userList[i].getName().contains(name)) {
-				res[index++] = userList[i];
-			}
-		}
-
-		return res;
+		return list.toArray(res);
 	}
 
+	// ArrayList의 사용 방법에 맞게 구현
 	public double getAgeAvg() {
 
 		int sum = 0;
 
-		for (int i = 0; i < this.size; i++) {
-			sum += userList[i].getAge();
+		for (int i = 0; i < userList.size(); i++) {
+			sum += userList.get(i).getAge();
 		}
 
-		return sum / this.size;
+		return sum / userList.size();
 
 	}
 
