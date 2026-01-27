@@ -54,7 +54,7 @@ public class Refrigerator extends Product {
 	@Override
 	public String toString() {
 		return super.toString() +
-			"Refrigerator{" +
+			" Refrigerator{" +
 			"category='" + category + '\'' +
 			", liter=" + liter +
 			", freezer=" + freezer +

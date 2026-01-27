@@ -13,8 +13,7 @@ public class Review {
 	public Review() {
 	}
 
-	public Review(int reviewId, String pCode, String writer, String content) {
-		this.reviewId = reviewId;
+	public Review(String pCode, String writer, String content) {
 		this.pCode = pCode;
 		this.writer = writer;
 		this.content = content;
