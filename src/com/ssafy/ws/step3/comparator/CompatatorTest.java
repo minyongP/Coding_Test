@@ -59,30 +59,32 @@ public class CompatatorTest {
 		
 		// Q. Collections.sort 메소드를 이용하여 personList를 정렬해 봅시다.
 		//    Comparator를 이용합니다.
-		Collections.sort(personList, new Comparator<Person>() {
+		// Collections.sort(personList, new Comparator<Person>() {
+		//
+		// 	@Override
+		// 	public int compare(Person p1, Person p2) {
+		//
+		// 		// Q. person1과 person2의 height를 비교해 봅시다.
+		// 		int result = p1.height - p2.height;
+		//
+		// 		// Q. result 값이 양수인 경우 person1 객체가 더 크다는 것을 의미합니다.
+		// 		//    person1 객체가 더 크기 때문에 return 1;을 작성합니다.
+		// 		if(result > 0) {
+		// 			return 1;
+		// 		}
+		// 		// Q. result 값이 음수인 경우 person1 객체가 더 작다는 것을 의미합니다.
+		// 		//    person1 객체가 더 작기 때문에 return -1;을 작성합니다.
+		// 		else if(result < 0) {
+		// 			return -1;
+		// 		}
+		//
+		// 		// Q. person1 객체와 person2 객체가 동일한 경우 크기가 같음을 의미합니다.
+		// 		//    return 0;을 작성합니다.
+		// 		return 0;
+		// 	}
+		// });
 
-			@Override
-			public int compare(Person p1, Person p2) {
-				
-				// Q. person1과 person2의 height를 비교해 봅시다.
-				int result = p1.height - p2.height;
-				
-				// Q. result 값이 양수인 경우 person1 객체가 더 크다는 것을 의미합니다.
-				//    person1 객체가 더 크기 때문에 return 1;을 작성합니다.
-				if(result > 0) {
-					return 1;
-				}
-				// Q. result 값이 음수인 경우 person1 객체가 더 작다는 것을 의미합니다.
-				//    person1 객체가 더 작기 때문에 return -1;을 작성합니다.
-				else if(result < 0) {
-					return -1;
-				}
-				
-				// Q. person1 객체와 person2 객체가 동일한 경우 크기가 같음을 의미합니다.
-				//    return 0;을 작성합니다.
-				return 0;
-			}
-		});
+		Collections.sort(personList, (p1, p2) -> p1.height - p2.height);
 		
 		// Q. 다시 personList에 저장된 데이터를 출력해 봅시다.
 		for (Person p : personList) {
