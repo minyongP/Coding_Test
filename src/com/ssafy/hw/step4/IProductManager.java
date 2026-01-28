@@ -12,21 +12,21 @@ public interface IProductManager {
 
 	boolean updateProduct(Product product);
 
-	boolean removeProduct(String pCode);
+	boolean removeProduct(String pCode) throws ProductCodeNotFoundException;
 
-	int sell(String pCode, int cnt);
+	int sell(String pCode, int cnt) throws ProductCodeNotFoundException, QuantityException;
 
 	Product[] getProductList();
 
-	Product searchByCode(String pCode);
+	Product searchByCode(String pCode) throws ProductCodeNotFoundException;
 
 	boolean addReview(Review review);
 
-	boolean removeReview(int reviewId);
+	boolean removeReview(Review review) throws ReviewNotFoundException;
 
-	List<Review> getProductReview(String pCode);
+	List<Review> getProductReview(String pCode) throws ReviewNotFoundException;
 
-	Product[] searchByName(String name);
+	Product[] searchByName(String name) throws NameNotFoundException;
 
 	long getTotalPrice();
 

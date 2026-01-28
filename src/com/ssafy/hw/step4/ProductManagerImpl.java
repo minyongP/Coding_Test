@@ -47,28 +47,28 @@
 		}
 
 		@Override
-		public boolean removeProduct(String pCode) {
+		public boolean removeProduct(String pCode) throws ProductCodeNotFoundException {
 			for (int i = 0; i < productList.size(); i++) {
 				if (pCode.equals(productList.get(i).getpCode())) {
 					productList.remove(i);
 					return true;
 				}
 			}
-			return false;
+			throw new ProductCodeNotFoundException(pCode);
 		}
 
 		@Override
-		public int sell(String pCode, int cnt) {
+		public int sell(String pCode, int cnt) throws ProductCodeNotFoundException, QuantityException{
 			for (Product p : productList) {
 				if (pCode.equals(p.getpCode())) {
 					int curQuantity = p.getQuantity();
 					int afterQuantity = curQuantity - cnt;
-					if (afterQuantity < 0) return 0;
+					if (afterQuantity < 0) throw new QuantityException();
 					p.setQuantity(afterQuantity);
 					return afterQuantity;
 				}
 			}
-			return 0;
+			throw new ProductCodeNotFoundException(pCode);
 		}
 
 		@Override
@@ -77,13 +77,13 @@
 		}
 
 		@Override
-		public Product searchByCode(String pCode) {
+		public Product searchByCode(String pCode) throws ProductCodeNotFoundException{
 			for (Product p : productList) {
 				if (pCode.equals(p.getpCode())) {
 					return p;
 				}
 			}
-			return null;
+			throw new ProductCodeNotFoundException(pCode);
 		}
 
 		@Override
@@ -102,33 +102,36 @@
 		}
 
 		@Override
-		public boolean removeReview(int reviewId) {
+		public boolean removeReview(Review review) throws ReviewNotFoundException {
 			for (Map.Entry<String, List<Review>> entry : reviewMap.entrySet()) {
 				List<Review> list = entry.getValue();
 
 				for (int i = 0; i < list.size(); i++) {
-					if (list.get(i).getReviewId() == reviewId) {
+					if (list.get(i).getpCode().equals(review.getpCode())) {
 						list.remove(i);
 						return true;
 					}
 				}
 			}
-			return false;
+			throw new ReviewNotFoundException(review.getpCode());
 		}
 
 		@Override
-		public List<Review> getProductReview(String pCode) {
-			return reviewMap.getOrDefault(pCode, new ArrayList<>());
+		public List<Review> getProductReview(String pCode) throws ReviewNotFoundException {
+			List<Review> res = reviewMap.getOrDefault(pCode, new ArrayList<>());
+			if (res.isEmpty()) throw new ReviewNotFoundException(pCode);
+			return res;
 		}
 
 		@Override
-		public Product[] searchByName(String name) {
+		public Product[] searchByName(String name) throws NameNotFoundException{
 			List<Product> list = new ArrayList<>();
 			for (Product p : productList) {
 				if (p.getpName().contains(name)) {
 					list.add(p);
 				}
 			}
+			if (list.isEmpty()) throw new NameNotFoundException(name);
 			return list.toArray(new Product[0]);
 		}
 

@@ -1,12 +1,10 @@
 package com.ssafy.hw.step2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class UserManagerImpl implements IUserManager {
 
-	// ArrayList 를 사용하여 사용자 리스트 관리하기
 	private List<User> userList = new ArrayList<>();
 
 	private final int MAX_SIZE = 100;
@@ -20,7 +18,6 @@ public class UserManagerImpl implements IUserManager {
 		return um;
 	}
 
-	// ArrayList의 사용 방법에 맞게 구현
 	public void add(User user) {
 		if (userList.size() < MAX_SIZE) {
 			userList.add(user);
@@ -29,7 +26,6 @@ public class UserManagerImpl implements IUserManager {
 		}
 	}
 
-	// ArrayList를 배열로 변환하여 반환
 	public User[] getList() {
 
 		User[] res = new User[userList.size()];
@@ -37,7 +33,6 @@ public class UserManagerImpl implements IUserManager {
 		return this.userList.toArray(res);
 	}
 
-	// ArrayList의 사용 방법에 맞게 구현
 	public User[] getUsers() {
 
 		List<User> list = new ArrayList<>();
@@ -54,7 +49,6 @@ public class UserManagerImpl implements IUserManager {
 
 	}
 
-	// ArrayList의 사용 방법에 맞게 구현
 	public VipUser[] getVipUsers() {
 
 		List<VipUser> list = new ArrayList<>();
@@ -71,8 +65,8 @@ public class UserManagerImpl implements IUserManager {
 
 	}
 
-	// ArrayList의 사용 방법에 맞게 구현
-	public User[] searchByName(String name) {
+	// 예외를 던진다고 선언
+	public User[] searchByName(String name) throws NameNotFoundException {
 
 		List<User> list = new ArrayList<>();
 
@@ -82,16 +76,15 @@ public class UserManagerImpl implements IUserManager {
 			}
 		}
 
-		// 주어진 단어를 포함하는 사용자가 없으면 null을 반환한다.
+		// 주어진 단어를 포함하는 사용자가 없으면 예외를 던진다.
 		if(list.size() == 0)
-			return null;
+			throw new NameNotFoundException(name);
 
 		User[] res = new User[list.size()];
 
 		return list.toArray(res);
 	}
 
-	// ArrayList의 사용 방법에 맞게 구현
 	public double getAgeAvg() {
 
 		int sum = 0;

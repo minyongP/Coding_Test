@@ -22,8 +22,12 @@ public class UserTest {
 		um.add(user2);
 		um.add(vuser);
 
-		// ArrayList로 자료 구조를 바꾼 뒤 똑같이 동작하는지 테스트한다.
-		System.out.println(Arrays.toString(um.searchByName("황")));
+		// 예외가 발생할수 있는 메소드인 searchByName은 처리가 필요.
+		try {
+			System.out.println(Arrays.toString(um.searchByName("황")));
+		} catch (NameNotFoundException exception) {
+			exception.printStackTrace();
+		}
 
 		System.out.println(Arrays.toString(um.getUsers()));
 		System.out.println(um.getAgeAvg());
