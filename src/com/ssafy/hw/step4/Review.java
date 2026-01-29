@@ -1,10 +1,13 @@
 package com.ssafy.hw.step4;
 
+import java.io.Serializable;
+
 /**
  * 리뷰 정보를 나타내는 클래스
  */
-public class Review {
-	//코드를 작성하세요.
+public class Review implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private int reviewId;
 	private String pCode;
 	private String writer;

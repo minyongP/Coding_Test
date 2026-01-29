@@ -36,4 +36,5 @@ public interface IProductManager {
 
 	Refrigerator[] getRefrigeratorsFreezer(boolean freeze);
 
+	void saveData();
 }

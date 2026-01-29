@@ -1,5 +1,10 @@
 package com.ssafy.hw.step2;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,4 +102,30 @@ public class UserManagerImpl implements IUserManager {
 
 	}
 
+	// 사용자 정보 저장
+	@Override
+	public void saveData() {
+		// try with resources
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("user.dat"))) {
+			oos.writeObject(this.userList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 사용자 정보 로드
+	@Override
+	public void loadData() {
+		File file = new File("user.dat");
+
+		// 파일이 없을 경우 고려
+		if(file.exists()) {
+			// try with resources
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))){
+				this.userList = (List<User>)ois.readObject();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

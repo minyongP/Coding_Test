@@ -1,9 +1,20 @@
 	package com.ssafy.hw.step4;
 
+	import java.io.BufferedReader;
+	import java.io.File;
+	import java.io.FileInputStream;
+	import java.io.FileOutputStream;
+	import java.io.IOException;
+	import java.io.InputStreamReader;
+	import java.io.ObjectInputStream;
+	import java.io.ObjectOutputStream;
 	import java.util.ArrayList;
 	import java.util.HashMap;
 	import java.util.List;
 	import java.util.Map;
+
+	import com.google.gson.Gson;
+	import com.google.gson.reflect.TypeToken;
 
 	/**
 	 * 상품리스트를 배열로 유지하며 관리하는 클래스
@@ -12,8 +23,8 @@
 		private static final int MAX_PRODUCT_SIZE = 100;
 		private static final int MAX_REVIEW_SIZE = 1000;
 
-		private List<Product> productList = new ArrayList<>();
-		private Map<String, List<Review>> reviewMap = new HashMap<>();
+		private List<Product> productList = loadProductData();
+		private Map<String, List<Review>> reviewMap = loadReviewData();
 
 		private int reviewNo = 1;
 
@@ -164,5 +175,40 @@
 				.map(p -> (Refrigerator) p)
 				.filter(r -> r.isFreezer() == freeze)
 				.toArray(Refrigerator[]::new);
+		}
+
+		List<Product> loadProductData() {
+			Gson gson = new Gson();
+			List<Product> products = new ArrayList<>();
+			try {
+				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("data/refrigerator.json")));
+				products = (List<Product>)gson.fromJson(br, new TypeToken<List<Refrigerator>>() {}.getType());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			return products;
+		}
+
+		Map<String, List<Review>> loadReviewData() {
+			File file = new File("data/review.dat");
+
+			if(file.exists()) {
+				try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))){
+					return this.reviewMap = (Map<String, List<Review>>)ois.readObject();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return new HashMap<>();
+		}
+
+		@Override
+		public void saveData() {
+			try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("data/review.dat"))) {
+				oos.writeObject(this.reviewMap);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
