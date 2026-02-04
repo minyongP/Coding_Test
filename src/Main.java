@@ -1,35 +1,41 @@
+import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        int[] arr = {20, 100, 50, 50, 50};
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-        // 1) copy + sort desc
-        int[] sorted = Arrays.copyOf(arr, arr.length);
-        Arrays.sort(sorted);
-        // Arrays.sort는 오름차순이므로 뒤에서 앞으로 보거나, Integer로 바꿔 reverse해도 됨
+        for (int test_case = 1; test_case <= 10; test_case++) {
+            st = new StringTokenizer(br.readLine());
+            int[][] A = new int[100][100];
 
-        // 2) value -> rank (competition rank)
-        Map<Integer, Integer> rankMap = new HashMap<>();
-        int n = sorted.length;
-
-        int prev = Integer.MIN_VALUE;
-        for (int i = n - 1; i >= 0; i--) { // 뒤에서 앞으로 = 내림차순 순회
-            int v = sorted[i];
-            if (v != prev) {
-                // 내림차순에서의 "몇 번째 위치"는 (n - i)
-                int rank = n - i;
-                rankMap.put(v, rank);
-                prev = v;
+            int ans = 0;
+            for (int i = 0; i < 100; i++) {
+                st = new StringTokenizer(br.readLine());
+                for (int j = 0; j < 100; j++) {
+                    int temp = Integer.parseInt(st.nextToken());
+                    if (temp == 2) ans = j;
+                    A[i][j] = temp;
+                }
             }
-        }
 
-        // 3) output ranks in original order
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < arr.length; i++) {
-            if (i > 0) sb.append(' ');
-            sb.append(rankMap.get(arr[i]));
+            int i = 99;
+            while (i > 0) {
+                if (ans > 1 && A[i][ans - 1] == 1) {
+                    while (ans > 1 && A[i][ans - 1] != 0) {
+                        ans--;
+                    }
+                    i--;
+                } else if (ans < 99 && A[i][ans + 1] == 1) {
+                    while (ans < 99 && A[i][ans + 1] != 0) {
+                        ans++;
+                    }
+                    i--;
+                } else i--;
+            }
+
+            System.out.println("#" + test_case + " " + ans);
         }
-        System.out.println(sb.toString()); // 5 1 2 2 2
     }
 }
