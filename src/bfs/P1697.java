@@ -1,46 +1,41 @@
 package bfs;
+
 import java.util.*;
 public class P1697 {
     public static void main(String[] args) {
+        final int MAX_DISTANCE = 100001;
         Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
         int K = sc.nextInt();
-        System.out.println(BFS(N, K));
-    }
-    private static int BFS(int N, int K) {
-        Queue<int[]> q = new LinkedList<>();
-        q.offer(new int[]{N, 0});
-        boolean[] v = new boolean[K*2];
+        Deque<int[]> q = new ArrayDeque<>();
+        boolean[] visited = new boolean[MAX_DISTANCE];
+
+        q.add(new int[]{N, 0});
+        visited[N] = true;
         while (!q.isEmpty()) {
             int[] now = q.poll();
-            if (now[0] == K) return now[1];
-            if (now[0]-1 >= 0 && !v[now[0]-1]) {
-                q.offer(new int[] {now[0]-1, now[1]+1});
-                v[now[0]-1] = true;
+            int x = now[0];
+            int cnt = now[1];
+
+            if (x == K) {
+                System.out.println(cnt)     ;
+                break;
             }
-            if (now[0]*2 <= K && !v[now[0]*2]) {
-                q.offer(new int[]{now[0]*2, now[1]+1});
-                v[now[0*2]] = true;
+            // 뒤로
+            if (x-1 >= 0 && !visited[x-1]) {
+                q.add(new int[] {x-1, cnt+1});
+                visited[x-1] = true;
             }
-            if (now[0]+1 <= K && !v[now[0]+1]) {
-                q.offer(new int[]{now[0]+1, now[1]+1});
-                v[now[0]+1] = true;
+            // 앞으로
+            if (x+1 < MAX_DISTANCE && !visited[x+1]) {
+                q.add(new int[] {x+1, cnt+1});
+                visited[x+1] = true;
+            }
+            // 두배
+            if (2*x < MAX_DISTANCE && !visited[2*x]) {
+                q.add(new int[] {2*x, cnt+1});
+                visited[2*x] = true;
             }
         }
-        return -1;
     }
 }
-/*
-* N(시작점) K(도착점)
-* BFS(N,F) 출력
-* BFS {
-*   큐에 시작점, 연산횟수 저장
-*   방문배열에 시작점 저장
-*   while(큐가 빌때까지) {
-*       if(now == K) q[1];
-*       if(now > K && 미방문) {now-1큐에 저장, 방문배열++ 저장}
-*       if(now*2 <= K && 미방문) { now*2큐 저장, 방문저장++ }
-*       if(now+1 <= K && 미방문) { now+1 저장++ }
-*   }
-* }
-* */

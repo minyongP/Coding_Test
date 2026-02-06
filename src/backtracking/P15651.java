@@ -2,40 +2,31 @@ package backtracking;
 
 import java.util.Scanner;
 
-public class P15649 {
-    static StringBuilder sb = new StringBuilder();
-    static boolean[] visited;
-    static int[] A;
+public class P15651 {
     static int N;
     static int M;
-
+    static int[] A;
+    static StringBuilder sb = new StringBuilder();
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         N = sc.nextInt();
         M = sc.nextInt();
         A = new int[M];
-        visited = new boolean[N+1];
-
-        backtracking(0);
-        System.out.print(sb.toString());
+        roop(0);
+        System.out.println(sb.toString());
     }
-
-    private static void backtracking(int depth) {
+    private static void roop(int depth) {
         if (depth == M) {
             for (int i = 0; i < M; i++) {
-                sb.append(A[i] + " ");
+                sb.append(A[i]).append(" ");
             }
             sb.append("\n");
             return;
         }
 
         for (int i = 1; i < N+1; i++) {
-            if (visited[i]) continue;
             A[depth] = i;
-            visited[i] = true;
-            backtracking(depth+1);
-            visited[i] = false;
+            roop(depth+1);
         }
-
     }
 }

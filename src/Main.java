@@ -21,7 +21,7 @@ public class Main {
             }
 
             int i = 99;
-            while (i > 0) {
+            while (i > 1) {
                 if (ans > 1 && A[i][ans - 1] == 1) {
                     while (ans > 1 && A[i][ans - 1] != 0) {
                         ans--;
