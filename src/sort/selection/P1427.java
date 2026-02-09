@@ -4,21 +4,24 @@ import java.util.Scanner;
 
 public class P1427 {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String str = scanner.next();
-        char[] c = str.toCharArray();
-        int[] A = new int[c.length];
-        for (int i = 0; i < A.length; i++) A[i] = c[i] - '0';
-        for (int i = 0; i < A.length; i++) {
-            int max = i;
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        int[] A = new int[s.length()];
+        for (int i = 0; i < s.length(); i++) A[i] = s.charAt(i) - '0';
+
+        for (int i = 0; i < A.length - 1; i++) {
+            int max = A[i];
+            int idx = i;
             for (int j = i+1; j < A.length; j++) {
-                if (A[j] > A[max]) max = j;
+                if (max < A[j]) {
+                    max = A[j];
+                    idx = j;
+                }
             }
-            int tmp = A[i];
-            A[i] = A[max];
-            A[max] = tmp;
+            int temp = A[i];
+            A[i] = A[idx];
+            A[idx] = temp;
         }
-        for (int a : A)
-        System.out.print(a);
+        for (int i : A) System.out.print(i);;
     }
 }

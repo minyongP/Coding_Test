@@ -1,8 +1,6 @@
 package im;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Scanner;
+import java.util.*;
 
 public class P1224 {
     public static void main(String[] args) {
@@ -12,10 +10,51 @@ public class P1224 {
         * 마지막 스택 다 pop
         * */
         Scanner sc = new Scanner(System.in);
-        for(int test_case = 1; test_case <= 10; test_case++) {
-            Deque<Integer> stack = new ArrayDeque<>();
+        StringBuilder sb;
+        Map<Character, Integer> priority = new HashMap<>();
+        priority.put('(', 0);
+        priority.put('+', 1);
+        priority.put('*', 2);
 
-            System.out.println("#" + test_case + " " + stack.pop());
+        for(int test_case = 1; test_case <= 10; test_case++) {
+            sc.nextLine();
+            String input = sc.nextLine();
+            sb = new StringBuilder();
+            Deque<Character> op = new ArrayDeque<>();
+
+            for (char c : input.toCharArray()) {
+                if ('0' < c && c < '9' + 1) {
+                    sb.append(c);
+                } else if (c == '(') {
+                    op.push(c);
+                } else if (c == ')') {
+                    while (op.peek() != '(') {
+                        sb.append(op.pop());
+                    }
+                    op.pop(); // (
+                } else {
+                    while (!op.isEmpty() && priority.get(op.peek()) >= priority.get(c)) {
+                        sb.append(op.pop());
+                    }
+                    op.push(c);
+                }
+            }
+
+            Deque<Long> ans = new ArrayDeque<>();
+            for (char c : sb.toString().toCharArray()) {
+                if ('0' < c && c < '9' + 1) {
+                    ans.push((long) (c - '0'));
+                } else {
+                    if (c == '+') {
+                        ans.push(ans.pop() + ans.pop());
+                    }
+                    if (c == '*') {
+                        ans.push(ans.pop() * ans.pop());
+                    }
+                }
+            }
+
+            System.out.println("#" + test_case + " " + ans.pop());
         }
     }
 }
