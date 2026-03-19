@@ -63,7 +63,7 @@ public class BFS {
             if(!visited[vertex]) {
                 //컴포넌트를 늘려주고
                 count++;
-                // 그래프와 버텍스, 방문했는지 확인할 visited를 bfs 혹은 dfs를 사용하여 변수에 담습니다.
+                // 그래프와 버텍스, 방문했는지 확인할 visited를 graph.bfs 혹은 dfs를 사용하여 변수에 담습니다.
                 visited = bfs_array(adjArray, vertex, visited);
     //                visited = dfs_array(adjArray, vertex, visited);
             }

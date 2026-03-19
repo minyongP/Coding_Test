@@ -1,4 +1,4 @@
-package bfs;
+package graph.bfs;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,9 +14,9 @@ import java.util.*;
 *       배열 초기화
 * for(N)
 *   for(N)
-*       if(집이고, 미방문시) bfs(i, j);
+*       if(집이고, 미방문시) graph.bfs(i, j);
 * }
-* bfs(x, y){
+* graph.bfs(x, y){
 *   큐에 저장
 *   방문 배열 저장
 *   cnt+1

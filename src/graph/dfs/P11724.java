@@ -1,4 +1,4 @@
-package dfs;
+package graph.dfs;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,12 +16,12 @@ public class P11724 {
      * for(n)
      *   if(!visited)
      *       연결 요소 개수++
-     *       dfs()
+     *       graph.dfs()
      * //재귀함수
-     * dfs
+     * graph.dfs
      *   if(현재 노드 == 방문 노드) return;
      *   방문배열 기록
-     *   dfs(현재 노드의 연결 노드 중 방문 하지 않는 노드로)
+     *   graph.dfs(현재 노드의 연결 노드 중 방문 하지 않는 노드로)
      * */
     static ArrayList<Integer>[] A;
     static boolean[] visited;

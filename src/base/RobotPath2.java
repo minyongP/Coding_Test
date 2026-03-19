@@ -92,7 +92,7 @@ public class RobotPath2 {
             }
         }
 
-        // bfs 구현을 위해 큐를 선언한다.
+        // graph.bfs 구현을 위해 큐를 선언한다.
         Queue<Integer[]> queue = new LinkedList<>();
 
         // 출발 지점의 좌표
